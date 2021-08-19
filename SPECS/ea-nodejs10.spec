@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 %endif
 
-Name:    ea-nodejs10
+Name:    ea-nodejs14
 Vendor:  cPanel, Inc.
 Summary: Node.js 14
 Version: 14.17.5
@@ -29,10 +29,10 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
-mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
-cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs14
+cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs14
 %if 0%{?rhel} >= 8
-cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs14
 # I am not sure why but the equivalent patch did not work, so using the sed hammer
 find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:'
 sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_modules/node-gyp/gyp/samples/samples
@@ -43,25 +43,25 @@ sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_mo
 for file in `find . -type f -print | xargs grep -l '^#![ \t]*/usr/bin/env node'`
 do
     echo "Changing Shebang (env) for" $file
-    sed -i '1s:^#![ \t]*/usr/bin/env node:#!/opt/cpanel/ea-nodejs10/bin/node:' $file
+    sed -i '1s:^#![ \t]*/usr/bin/env node:#!/opt/cpanel/ea-nodejs14/bin/node:' $file
 done
 %endif
 
 mkdir -p %{buildroot}/etc/cpanel/ea4
-echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger.nodejs
+echo -n /opt/cpanel/ea-nodejs14/bin/node > %{buildroot}/etc/cpanel/ea4/passenger.nodejs
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 
 %files
-/opt/cpanel/ea-nodejs10
+/opt/cpanel/ea-nodejs14
 /etc/cpanel/ea4/passenger.nodejs
-%attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
+%attr(0755,root,root) /opt/cpanel/ea-nodejs14/bin/*
 
 
 %changelog
 * Fri Aug 19 2021 Oscar Fernandez <cory@cpanel.net> - 14.17.5-1
-- EA-9707: Update ea-nodejs10 from v10.24.1 to v14.17.5
+- EA-9707: Fork ea-nodejs10, renamed to ea-nodejs14 - update ea-nodejs14 from v10.24.1 to v14.17.5
 
 * Fri Apr 23 2021 Cory McIntire <cory@cpanel.net> - 10.24.1-1
 - EA-9707: Update ea-nodejs10 from v10.24.0 to v10.24.1

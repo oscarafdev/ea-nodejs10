@@ -14,7 +14,7 @@ index c0d9be0..f8158e1 100755
 +++ b/lib/node_modules/npm/bin/npm-cli.js
 @@ -1,4 +1,4 @@
 -#!/usr/bin/env node
-+#!/opt/cpanel/ea-nodejs10/bin/node
++#!/opt/cpanel/ea-nodejs14/bin/node
  ;(function () { // wrapper in case we're in module_context mode
    // windows: running "npm blah" in this folder will invoke WSH, not node.
    /* global WScript */
@@ -24,7 +24,7 @@ index f404365..c1a68e9 100755
 +++ b/lib/node_modules/npm/bin/npx-cli.js
 @@ -1,4 +1,4 @@
 -#!/usr/bin/env node
-+#!/opt/cpanel/ea-nodejs10/bin/node
++#!/opt/cpanel/ea-nodejs14/bin/node
  
  const npx = require('libnpx')
  const path = require('path')
